@@ -1,0 +1,5 @@
+TRANSFORM Sum([4_Animals].[Длина жизни]) AS [Sum-Длина жизни]
+SELECT [4_Animals].[Название животного]
+FROM 4_Animals
+GROUP BY [4_Animals].[Название животного]
+PIVOT [4_Animals].Отряд;

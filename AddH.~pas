@@ -1,0 +1,88 @@
+unit AddH;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, DBCtrls, Mask;
+
+type
+  TAddHabitat = class(TForm)
+    Label3: TLabel;
+    Label2: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    DBMemo1: TDBMemo;
+    Button6: TButton;
+    Button1: TButton;
+    Button2: TButton;
+    DBEdit1: TDBEdit;
+    DBMemo2: TDBMemo;
+    DBText1: TDBText;
+    procedure Button6Click(Sender: TObject);
+    procedure DBMemo2KeyPress(Sender: TObject; var Key: Char);
+    procedure Button2Click(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure DBEdit2KeyPress(Sender: TObject; var Key: Char);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  AddHabitat: TAddHabitat;
+
+implementation
+
+uses GlobalModule, Table2;
+
+{$R *.dfm}
+
+procedure TAddHabitat.Button6Click(Sender: TObject);
+begin
+  if DBMemo1.Text<>'' then
+    if DBEdit1.Text<>'' then
+      if DBMemo2.Text<>'' then
+        begin
+        Module.TableHabitat.Post;
+        close;
+        end
+      else showmessage('Не заполнено поле:'+#13+'Климат')
+    else showmessage('Не заполнено поле:'+#13+'Площадь, млн км2')
+  else showmessage('Не заполнено поле:'+#13+'Стандартная среда обитания');
+end;
+
+procedure TAddHabitat.DBMemo2KeyPress(Sender: TObject; var Key: Char);
+begin
+if not (key in ['0'..'9',#44,#8,#13]) then key:=#0;
+end;
+
+procedure TAddHabitat.Button2Click(Sender: TObject);
+begin
+  if DBMemo1.Text<>'' then
+    if DBEdit1.Text<>'' then
+      if DBMemo2.Text<>'' then
+        begin
+        Module.TableHabitat.Post;
+        Module.TableHabitat.Insert;
+        DBEdit1.Clear;
+        DBMemo1.Clear;
+        DBMemo2.Clear;
+        end
+      else showmessage('Не заполнено поле:'+#13+'Климат среды обитания')
+    else showmessage('Не заполнено поле:'+#13+'Площадь, млн км2')
+  else showmessage('Не заполнено поле:'+#13+'Название среды обитания');
+end;
+
+procedure TAddHabitat.Button1Click(Sender: TObject);
+begin
+Close;
+end;
+
+procedure TAddHabitat.DBEdit2KeyPress(Sender: TObject; var Key: Char);
+begin
+key:=#0;
+end;
+
+end.
